@@ -28,7 +28,7 @@ async def new_conn(ws):                 #кто то подключается, �
     elif msg["role"] == "phone_status":
         await phone_status_loop(ws)
 
-def wol(mac, bcast="rakulovsftp.ddns.net"):    
+def wol(mac, bcast="damil-pc.ddns.net"):    
     print(f"отправляю WoL на {bcast}")#собираем magic packet
     m = mac.replace(":", "").replace("-", "")
     pkt = b"\xff" * 6 + bytes.fromhex(m) * 16
