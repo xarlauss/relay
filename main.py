@@ -28,12 +28,12 @@ async def new_conn(ws):                 #кто то подключается, �
     elif msg["role"] == "phone_status":
         await phone_status_loop(ws)
 
-def wol(mac):                       #собираем magic packet
+def wol(mac, bcast="rakulovsftp.ddns.net"):                       #собираем magic packet
     m = mac.replace(":", "").replace("-", "")
     pkt = b"\xff" * 6 + bytes.fromhex(m) * 16
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-    s.sendto(pkt, ("255.255.255.255", 9))
+    s.sendto(pkt, (bcast, 9))
     s.close()
 
 async def phone_input_loop(ws):
