@@ -25,6 +25,8 @@ async def new_conn(ws):                 #кто то подключается, �
         await phone_input_loop(ws)
     elif msg["role"] == "pc_input":
         await pc_input_loop(ws)
+    elif msg["role"] == "phone_status":
+        await phone_status_loop(ws)
 
 def wol(mac):                       #собираем magic packet
     m = mac.replace(":", "").replace("-", "")
@@ -62,6 +64,12 @@ async def phone_loop(ws):   #цикл работы с телефоном
             if pc_connect:
                 await pc_connect.send(json.dumps(msg))
         elif msg["type"] == "status_check":
+            await ws.send(json.dumps({"type": "status", "on": pc_connect is not None}))
+
+async def phone_status_loop(ws):
+    async for msg in ws:
+        msg = json.loads(msg)
+        if msg["type"] == "status_check":
             await ws.send(json.dumps({"type": "status", "on": pc_connect is not None}))
 
 async def pc_loop(ws):  #цикл работы с пк
