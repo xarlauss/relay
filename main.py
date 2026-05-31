@@ -46,8 +46,13 @@ async def phone_input_loop(ws):
 async def pc_input_loop(ws):
     global pc_input_ws
     pc_input_ws = ws
-    async for msg in ws:
+    try:
+        async for msg in ws:
+            pass
+    except:
         pass
+    finally:
+        pc_input_ws = None
         
 
 async def phone_loop(ws):   #цикл работы с телефоном
