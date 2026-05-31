@@ -29,7 +29,7 @@ async def new_conn(ws):                 #кто то подключается, �
         await phone_status_loop(ws)
 
 def wol(mac, bcast="rakulovsftp.ddns.net"):    
-     print(f"отправляю WoL на {bcast}")#собираем magic packet
+    print(f"отправляю WoL на {bcast}")#собираем magic packet
     m = mac.replace(":", "").replace("-", "")
     pkt = b"\xff" * 6 + bytes.fromhex(m) * 16
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
